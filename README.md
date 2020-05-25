@@ -13,7 +13,7 @@
 Facts table design:
 
 Our fact table is `songplays` and the business event metric we're tracking is `start_time`, which is a semi-additive fact since it would not make sense to SUM all `start_time` values. However, getting the AVG, MIN, or MAX would give us some useful data to analyze.
-
+asd
 The type of `songplays` fact table is `Transactional` as each record represents one event at a single instant.
 
 
@@ -28,6 +28,12 @@ The type of `songplays` fact table is `Transactional` as each record represents 
 - Data Modeling Language file: sql_queries.py
 - Data Query Language file: sql_queries.py
 
+#### Distribution key strategies
+EVEN, ALL, AUTO, KEY
+
+#### Sorting keys strategies
+
+
 #### DW architecture
 
 Kimball's Bus X Independent Data Marts X Inmon's Corporate Information Factory X Hybrid Kimball's Bus and Imon's CIF
@@ -37,11 +43,6 @@ Staging area
 #### Server sizing and capacity planning
 
 #### Data quality check
-
-#### Distribution key strategies
-EVEN, ALL, AUTO, KEY
-
-#### Sorting keys strategies
 
 ---
 
