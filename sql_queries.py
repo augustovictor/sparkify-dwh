@@ -100,12 +100,12 @@ CREATE TABLE IF NOT EXISTS time_table (
 # STAGING TABLES
 
 staging_events_copy = ("""
-COPY staging_events_table FROM '{}' CREDENTIALS 'aws_iam_role=arn:aws:iam::{}:role/{}' REGION '{}'
-""").format(config['S3']['LOG_DATA'], config['AWS']['ACC_NUMBER'], config['AWS']['ROLE_NAME'], config['AWS']['REGION'])
+COPY staging_events_table FROM '{}' CREDENTIALS '{}' REGION '{}'
+""").format(config['S3']['LOG_DATA'], config['IAM_ROLE']['ARN'], config['AWS']['REGION'])
 
 staging_songs_copy = ("""
-COPY staging_songs_table FROM '{}' CREDENTIALS 'aws_iam_role=arn:aws:iam::{}:role/{}' REGION '{}'
-""").format(config['S3']['SONG_DATA'], config['AWS']['ACC_NUMBER'], config['AWS']['ROLE_NAME'], config['AWS']['REGION'])
+COPY staging_songs_table FROM '{}' CREDENTIALS '{}' REGION '{}'
+""").format(config['S3']['SONG_DATA'], config['IAM_ROLE']['ARN'], config['AWS']['REGION'])
 
 # FINAL TABLES
 
