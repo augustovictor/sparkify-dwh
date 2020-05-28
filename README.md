@@ -177,7 +177,12 @@ SELECT DISTINCT(TO_CHAR(payment_date :: DATE, 'yyyyMMDD')::integer) AS date_key,
        CASE WHEN EXTRACT(ISODOW FROM payment_date) IN (6, 7) THEN true ELSE false END AS is_weekend
 FROM payment;
 ```
-- 
+
+### Insertion errors
+These can be found in Redshift table:
+```sql
+select * from stl_load_errors ORDER BY starttime DESC LIMIT 5;
+```
 
 ### AWS CLI
 Upload files to s3:
@@ -192,3 +197,4 @@ aws-vault exec sparkify-dw -- aws s3 cp log_data s3://victor-nano-sparkify-raw-d
 - https://www.zentut.com/data-warehouse/fact-table/
 - https://dwgeek.com/types-of-fact-tables-data-warehouse.html/
 - http://www.datamartist.com/dimensional-tables-and-fact-tables
+- https://docs.aws.amazon.com/pt_br/redshift/latest/dg/r_Dateparts_for_datetime_functions.html
