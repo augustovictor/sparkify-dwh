@@ -147,8 +147,6 @@ As we're providing an analytical base in atomic level with the staging tables, a
 - The Data Delivery phase was performed by DML queries copying data from staging tables and filtering information that was compliant to our quality checks;
 - The final tables are part of our final Enterprise DW bus in which applications can be plugged into. Ex: Data visualization applications, and BI applications;
 
-Staging area
-
 #### Server sizing and capacity planning
 
 #### Data quality check
