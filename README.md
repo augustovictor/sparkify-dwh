@@ -142,10 +142,10 @@ We have `log_data` which contains business events from sparkify app, and `song_d
 
 As we're providing an analytical base in atomic level with the staging tables, and the final fact table focused on the business process of music listening, which by exclusion is not focused on a specific department, the architecture of this Data Warehouse is the Hybrid Kimball's Bus and Imon's Corporate Information Factory (CIF).
 
-- The Data Aquisition phase was performed by copying data from S3  into staging tables
+- The Data Aquisition phase was performed by copying data from S3  into staging tables;
 - Staging tables are part of our Enterprise DW, with data in atomic level, in case any department needs it;
 - The Data Delivery phase was performed by DML queries copying data from staging tables and filtering information that was compliant to our quality checks;
-- The final tables are part of our final Enterprise DW bus in which applications can be plugged into. Ex: Data visualization applications, and BI applications.
+- The final tables are part of our final Enterprise DW bus in which applications can be plugged into. Ex: Data visualization applications, and BI applications;
 
 Staging area
 
