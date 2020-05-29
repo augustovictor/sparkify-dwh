@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS staging_events_table (
     ts BIGINT,
     user_agent VARCHAR,
     user_id VARCHAR(255)
-) BACKUP NO
+)
+BACKUP NO
 """)
 
 staging_songs_table_create = ("""
@@ -53,7 +54,8 @@ CREATE TABLE IF NOT EXISTS staging_songs_table (
     song_id VARCHAR(100),
     title VARCHAR(255),
     year SMALLINT
-) BACKUP NO
+)
+BACKUP NO
 """)
 
 songplay_table_create = ("""
@@ -67,7 +69,9 @@ CREATE TABLE IF NOT EXISTS songplay_table (
     session_id VARCHAR(70),
     location VARCHAR(255),
     user_agent VARCHAR
-) BACKUP NO DISTSTYLE EVEN
+)
+BACKUP NO
+DISTSTYLE EVEN
 """)
 
 user_table_create = ("""
@@ -77,7 +81,7 @@ CREATE TABLE IF NOT EXISTS user_table (
     last_name VARCHAR(255),
     gender CHAR,
     level VARCHAR(100)
-) BACKUP NO DISTSTYLE ALL
+) BACKUP NO DISTSTYLE ALL COMPOUND SORTKEY(user_id, first_name)
 """)
 
 song_table_create = ("""
@@ -87,7 +91,7 @@ CREATE TABLE IF NOT EXISTS song_table (
     artist_id VARCHAR(100) REFERENCES artist_table(artist_id),
     year SMALLINT,
     duration DECIMAL(11, 5)
-) BACKUP NO DISTSTYLE ALL
+) BACKUP NO DISTSTYLE ALL COMPOUND SORTKEY(song_id, title)
 """)
 
 artist_table_create = ("""
@@ -97,20 +101,19 @@ CREATE TABLE IF NOT EXISTS artist_table (
     location VARCHAR(100),
     lattitude VARCHAR(100),
     longitude VARCHAR(100)
-) BACKUP NO DISTSTYLE ALL
+) BACKUP NO DISTSTYLE ALL COMPOUND SORTKEY(artist_id, name)
 """)
 
 time_table_create = ("""
 CREATE TABLE IF NOT EXISTS time_table (
     time_key BIGINT IDENTITY(0, 1),
-    start_time DATE,
+    start_time DATE SORTKEY,
     hour SMALLINT,
     day SMALLINT,
     week SMALLINT,
     month SMALLINT,
     year SMALLINT,
-    weekday SMALLINT
-) BACKUP NO DISTSTYLE ALL
+    weekday SMALLINT) BACKUP NO DISTSTYLE ALL
 """)
 
 # STAGING TABLES
