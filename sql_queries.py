@@ -19,7 +19,6 @@ time_table_drop = "DROP TABLE IF EXISTS time_table"
 
 staging_events_table_create= ("""
 CREATE TABLE IF NOT EXISTS staging_events_table (
-    songplay_id BIGINT IDENTITY(0, 1),
     artist VARCHAR(255),
     auth VARCHAR(255),
     first_name VARCHAR(255),
