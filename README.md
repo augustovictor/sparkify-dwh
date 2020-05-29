@@ -178,10 +178,16 @@ SELECT DISTINCT(TO_CHAR(payment_date :: DATE, 'yyyyMMDD')::integer) AS date_key,
 FROM payment;
 ```
 
-### Insertion errors
+### Errors
 These can be found in Redshift table:
 ```sql
+-- insertion
 select * from stl_load_errors ORDER BY starttime DESC LIMIT 5;
+```
+
+```sql
+-- ddl
+Cannot specify DISTKEY for column "user_id" of table "user_table" when DISTSTYLE is NONE or EVEN
 ```
 
 ### AWS CLI
@@ -198,3 +204,6 @@ aws-vault exec sparkify-dw -- aws s3 cp log_data s3://victor-nano-sparkify-raw-d
 - https://dwgeek.com/types-of-fact-tables-data-warehouse.html/
 - http://www.datamartist.com/dimensional-tables-and-fact-tables
 - https://docs.aws.amazon.com/pt_br/redshift/latest/dg/r_Dateparts_for_datetime_functions.html
+- https://docs.aws.amazon.com/pt_br/redshift/latest/dg/r_CREATE_TABLE_examples.html
+- https://medium.com/@elliotchance/building-a-date-dimension-table-in-redshift-6474a7130658
+- https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-sort-key.html
