@@ -9,27 +9,52 @@ Analytics team wants to answer the following questions:
 Question 1: How many plays each artist have?
 OLAP Cube operation: Rollup
 > A rollup operation is a higher level of aggregation to a larger grouping
+```sql
+SELECT a.name as artist_name, COUNT(sp.song_id) as total_song_plays
+FROM songplay_table sp
+JOIN artist_table a ON (a.artist_id = sp.artist_id)
+JOIN song_table s ON (s.song_id = sp.song_id)
+GROUP BY a.name
+ORDER BY total_song_plays DESC, artist_name;
+```
 
 Question 2: How many plays each artist have in each music?
 OLAP Cube operation: Drill-down
 > A drill-down operation is a detailed level on one dimension
-
-Question 3: Which users have listened to the song 'All Hands Against His Own', and when?
-OLAP Cube operation: Slice
-> A slice operation is a filtering on dimensions when one of them has a fixed filtering value
 ```sql
-SELECT artist, song, length FROM song_table WHERE session_id = 338 AND item_in_session = 4;
-SELECT a.name, s.title, u.user_id, u.level, CONCAT(u.first_name, CONCAT(' ', u.last_name)) as user_name
+SELECT a.name as artist_name, s.title as song_title, COUNT(sp.song_id) as total_song_plays
 FROM songplay_table sp
 JOIN artist_table a ON (a.artist_id = sp.artist_id)
 JOIN song_table s ON (s.song_id = sp.song_id)
-JOIN user_table u ON (u.user_id = sp.user_id)
-WHERE session_id = 338;
+GROUP BY artist_name, song_title
+ORDER BY total_song_plays DESC, artist_name, song_title;
 ```
 
-Question 4: How many users have listened to 'All Hands Against His Own', 'Get Into Yours', and 'Like A Rolling Stone' between '2018-11-01' and '2018-11-30'?
+Question 3: Which users have listened to the song 'All Hands Against His Own', for the last time?
+OLAP Cube operation: Slice
+> A slice operation is a filtering on dimensions when one of them has a fixed filtering value
+```sql
+SELECT u.user_id, CONCAT(u.first_name, CONCAT(' ', u.last_name)) as user_name, MAX(sp.start_time) as last_song_play
+FROM songplay_table sp
+JOIN song_table s ON (s.song_id = sp.song_id)
+JOIN user_table u ON (u.user_id = sp.user_id)
+WHERE s.title = 'Let''s Get It Started'
+GROUP BY u.user_id, u.first_name, u.last_name
+ORDER BY last_song_play DESC;
+```
+
+Question 4: Which users have listened to 'All Hands Against His Own', 'Get Into Yours', and 'Like A Rolling Stone' between '2018-11-01' and '2018-11-30'?
 OLAP Cube operation: Dice
 > A dice operation is a filtering on all dimensions with specific values/ranges
+```sql
+SELECT u.user_id, CONCAT(u.first_name, CONCAT(' ', u.last_name)) as user_name, s.title as song_name, MAX(sp.start_time) as last_song_play
+FROM songplay_table sp
+JOIN song_table s ON (s.song_id = sp.song_id)
+JOIN user_table u ON (u.user_id = sp.user_id)
+WHERE s.title IN ('Not For You', 'Setanta matins', 'Kids In America')
+AND sp.start_time BETWEEN '2018-11-01' AND '2018-11-30'
+GROUP BY u.user_id, u.first_name, u.last_name, song_name;
+```
 
 ---
 
@@ -66,7 +91,7 @@ However, the distribution key strategy for the facts table `songplays` was `EVEN
 Our type of queries do not envolve analyzing most recent data only. Although the `SORTKEY` for the facts table `songplay` is `start_time` this is not its main reason.
 > Aws doc: Queries are more efficient because they can skip entire blocks that fall outside the time range
 
-Our queries are more about ranges of `start_time` values.
+XXXXXX Our queries are more about ranges of `start_time` values.
 
 #### Raw data
 We have `log_data` which contains business events from sparkify app, and `song_data` with music metadata.
@@ -261,6 +286,7 @@ export AWS_PROFILE=<PROFILE_NAME>
 - https://docs.aws.amazon.com/pt_br/redshift/latest/dg/r_STL_LOAD_ERRORS.html
 
 ```sql
+-- Example of date attributes extraction
 INSERT INTO dimDate (date_key, date, year, quarter, month, day, week, is_weekend)
 SELECT DISTINCT(TO_CHAR(payment_date :: DATE, 'yyyyMMDD')::integer) AS date_key,
        date(payment_date)                                           AS date,
