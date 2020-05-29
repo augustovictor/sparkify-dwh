@@ -65,7 +65,7 @@ GROUP BY u.user_id, u.first_name, u.last_name, song_name;
 ### Technical requirements
 
 #### Database choice
-The OLAP database choice is the colunar database Redshift. This type of database allows us to have a denormalized schema, thus speeding up OLAP operations.
+The OLAP database choice is the columnar database Redshift. This type of database allows us to have a denormalized schema, thus speeding up OLAP operations.
 
 #### Facts and Dimensions tables design (Physical data model)
 
