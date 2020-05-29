@@ -147,7 +147,6 @@ As we're providing an analytical base in atomic level with the staging tables, a
 - The Data Delivery phase was performed by DML queries copying data from staging tables and filtering information that was compliant to our quality checks;
 - The final tables are part of our final Enterprise DW bus in which applications can be plugged into. Ex: Data visualization applications, and BI applications;
 
-#### Server sizing and capacity planning
 
 #### Data quality check
 There was no quality check performed during Data Aquisition phase, since we wanted to have our Enterprise DW with atomic level data;
@@ -231,9 +230,16 @@ CREATE TABLE IF NOT EXISTS staging_events_table (
 ```
 
 ## Redshift config
+Since there is no projection on how this analytical database would be used, the configuration was set to the minimum. It is possible to scale-up and scale-out the nodes.
+
+- Database
+    - Node type: dc2.large
+    - Number of nodes: 1
+    - Total available storage: 160 GB
+    - Backup retention period: 1 day (required to allow me to pause the cluster which allows us to lower costs)
+
 - IAM user: Create an IAM user with permissions;
 - Security group with inbound rule set to `My Ip` so it was possible to run python scripts locally;
-- Redshift cluster with 1 node and backup retentio period of 1 day (required to allow me to pause the cluster)
 
 ### Informative errors section:
 
@@ -268,6 +274,22 @@ aws cli --profile <PROFILE_NAME> <COMMAND>
 Use specific profile in current session:
 ```shell
 export AWS_PROFILE=<PROFILE_NAME>
+```
+
+---
+
+## Running the setup and etl process
+
+As a pre-req for running the setup and etl process you must have aws cli installed and confiugured locally.
+
+Step 1: Database setup
+```shell
+make ddl
+```
+
+Step 2: ETL Process
+```shell
+make etl
 ```
 
 ---
