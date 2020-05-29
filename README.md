@@ -46,7 +46,7 @@ GROUP BY u.user_id, u.first_name, u.last_name
 ORDER BY last_song_play DESC;
 ```
 
-Question 4: Which users have listened to 'All Hands Against His Own', 'Get Into Yours', and 'Like A Rolling Stone' between '2018-11-01' and '2018-11-30'?
+Question 4: Which users have listened to 'Not For You', 'Setanta matins', 'Kids In America' between '2018-11-01' and '2018-11-30'?
 
 OLAP Cube operation: Dice
 > A dice operation is a filtering on all dimensions with specific values/ranges
