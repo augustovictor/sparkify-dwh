@@ -7,6 +7,7 @@
 Analytics team wants to answer the following questions:
 
 Question 1: How many plays each artist have?
+
 OLAP Cube operation: Rollup
 > A rollup operation is a higher level of aggregation to a larger grouping
 ```sql
@@ -19,6 +20,7 @@ ORDER BY total_song_plays DESC, artist_name;
 ```
 
 Question 2: How many plays each artist have in each music?
+
 OLAP Cube operation: Drill-down
 > A drill-down operation is a detailed level on one dimension
 ```sql
@@ -31,6 +33,7 @@ ORDER BY total_song_plays DESC, artist_name, song_title;
 ```
 
 Question 3: Which users have listened to the song 'All Hands Against His Own', for the last time?
+
 OLAP Cube operation: Slice
 > A slice operation is a filtering on dimensions when one of them has a fixed filtering value
 ```sql
@@ -44,6 +47,7 @@ ORDER BY last_song_play DESC;
 ```
 
 Question 4: Which users have listened to 'All Hands Against His Own', 'Get Into Yours', and 'Like A Rolling Stone' between '2018-11-01' and '2018-11-30'?
+
 OLAP Cube operation: Dice
 > A dice operation is a filtering on all dimensions with specific values/ranges
 ```sql
