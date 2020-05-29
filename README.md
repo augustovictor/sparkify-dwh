@@ -95,8 +95,6 @@ However, the distribution key strategy for the facts table `songplays` was `EVEN
 Our type of queries do not envolve analyzing most recent data only. Although the `SORTKEY` for the facts table `songplay` is `start_time` this is not its main reason.
 > Aws doc: Queries are more efficient because they can skip entire blocks that fall outside the time range
 
-XXXXXX Our queries are more about ranges of `start_time` values.
-
 #### Raw data
 We have `log_data` which contains business events from sparkify app, and `song_data` with music metadata.
 
