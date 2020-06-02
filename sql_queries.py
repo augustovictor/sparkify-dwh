@@ -61,10 +61,10 @@ songplay_table_create = ("""
 CREATE TABLE IF NOT EXISTS songplay_table (
     songplay_id BIGINT IDENTITY(0, 1) PRIMARY KEY,
     start_time DATE SORTKEY,
-    user_id VARCHAR(80) REFERENCES user_table(user_id),
+    user_id VARCHAR(80) NOT NULL REFERENCES user_table(user_id),
     level VARCHAR(100),
-    song_id VARCHAR(90) REFERENCES song_table(song_id),
-    artist_id VARCHAR(80) REFERENCES artist_table(artist_id),
+    song_id VARCHAR(90) NOT NULL REFERENCES song_table(song_id),
+    artist_id VARCHAR(80) NOT NULL REFERENCES artist_table(artist_id),
     session_id VARCHAR(70),
     location VARCHAR(255),
     user_agent VARCHAR
