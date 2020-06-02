@@ -139,7 +139,7 @@ INSERT INTO songplay_table (
     user_agent
 )
 (
-    SELECT
+    SELECT DISTINCT
         TIMESTAMP 'epoch' + se.ts/1000 * INTERVAL '1 second' AS start_time,
         se.user_id as user_id,
         se.level as level,
@@ -151,6 +151,7 @@ INSERT INTO songplay_table (
     FROM staging_events_table se
     JOIN artist_table a ON (a.name = se.artist)
     JOIN song_table s ON (s.title = se.song AND s.duration = se.length)
+    WHERE se.page = 'NextSong'
 )
 """)
 
@@ -163,7 +164,7 @@ INSERT INTO user_table (
     level
 )
 (
-    SELECT
+    SELECT DISTINCT
         se.user_id AS user_id,
         se.first_name AS first_name,
         se.last_name AS last_name,
@@ -171,6 +172,7 @@ INSERT INTO user_table (
         se.level AS level
     FROM staging_events_table se
     WHERE se.user_id IS NOT NULL
+    AND se.page = 'NextSong'
 )
 """)
 
@@ -183,7 +185,7 @@ INSERT INTO song_table (
     duration
 )
 (
-    SELECT
+    SELECT DISTINCT
         ss.song_id AS song_id,
         ss.title AS title,
         ss.artist_id AS artist_id,
@@ -205,7 +207,7 @@ INSERT INTO artist_table (
     longitude
 )
 (
-    SELECT
+    SELECT DISTINCT
         ss.artist_id AS artist_id,
         ss.artist_name AS name,
         ss.artist_location AS location,
@@ -227,7 +229,7 @@ INSERT INTO time_table (
     weekday
 )
 (
-    SELECT
+    SELECT DISTINCT
         TIMESTAMP 'epoch' + se.ts/1000 * INTERVAL '1 second' AS start_time,
         EXTRACT(hour FROM start_time) AS hour,
         EXTRACT(day FROM start_time) AS day,
